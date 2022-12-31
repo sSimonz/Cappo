@@ -30,9 +30,7 @@ PlayWidget::PlayWidget(Stage degree, int level, QWidget *parent) :
     m_level(level),
     m_flickerTimer(nullptr),
     m_waitDialog(nullptr),
-    m_bAddOneSlot(false),
-    m_clickMusic(false),
-    m_removeMusic(false)
+    m_bAddOneSlot(false)
 {
     setWindowIcon(QIcon(":/res/app.png"));
     setWindowTitle("Cappo of Cappo");
@@ -90,7 +88,8 @@ void PlayWidget::Init()
             }
         }
     }
-//    InitQCards();
+    if(m_level > 5)
+        InitQCards();
     m_timer->start();
 }
 
@@ -194,12 +193,12 @@ void PlayWidget::InitBtnSetting()
     });
 
     // 测试用
-    QPushButton *btn = new QPushButton(this);
-    btn->setGeometry(0, height()-48, 48, 48);
-    connect(btn, &QPushButton::clicked, this, [this]()
-    {
-        emit sendHome(Done);
-    });
+//    QPushButton *btn = new QPushButton(this);
+//    btn->setGeometry(0, height()-48, 48, 48);
+//    connect(btn, &QPushButton::clicked, this, [this]()
+//    {
+//        emit sendHome(Done);
+//    });
 }
 
 void PlayWidget::InitBtnProp()
@@ -236,15 +235,14 @@ void PlayWidget::InitBtnProp()
     btnsLayout->setGeometry(rtBtns);
 
     m_btnAddSlot = new QPushButton(this);
+    m_btnAddSlot->setWindowFlags(Qt::WindowStaysOnTopHint);
     QPoint ptBtn = m_ptSlot;
-    ptBtn.setX(m_ptSlot.x() + WIDTH*7 + 7);
-    ptBtn.setY(m_ptSlot.y() + 7);
-    QRect rtBtn = QRect(ptBtn, QSize(WIDTH, WIDTH));
+    ptBtn.setX(m_ptSlot.x() + WIDTH*7);
+    QRect rtBtn = QRect(ptBtn, QSize(57, 57));
     m_btnAddSlot->setGeometry(rtBtn);
     m_btnAddSlot->setStyleSheet("QPushButton{"
                                 "border-image: url(:/res/plus.png);"
-                                "background-color: #FFBF31;"
-                                "border-radius: 8px;}"
+                                "border-radius: 12px;}"
                                 "QPushButton:hover{"
                                 "background-color: #DCE8F6;}"
                                 "QPushButton:pressed{"
@@ -255,19 +253,9 @@ void PlayWidget::InitBtnProp()
         dialog->exec();
     });
     m_clickMusic = new QMediaPlayer(this);
-    m_clickMusic->setMedia(QUrl("qrc:/res/BackButtonSound.wav"));
+    m_clickMusic->setMedia(QUrl("qrc:/res/clicked.wav"));
     m_removeMusic = new QMediaPlayer(this);
-    m_removeMusic->setMedia(QUrl("qrc:/res/BackButtonSound.wav"));
-//    connect(m_clickMusic, &QMediaPlayer::mediaStatusChanged, this, [this](QMediaPlayer::MediaStatus status)
-//    {
-//        if(status == QMediaPlayer::PlayingState)
-//        {
-//            m_clickMusic->stop();
-//            m_clickMusic->setPosition(0);
-//            m_clickMusic->play();
-//        }
-//    });
-
+    m_removeMusic->setMedia(QUrl("qrc:/res/Eliminate.wav"));
 }
 
 void PlayWidget::InitTimer()
@@ -491,11 +479,8 @@ void PlayWidget::addCardSlot()
     int curType = card->getCardInfo()->type;
     int curMode = card->getCardInfo()->mode;
     bool bQuest = card->getCardInfo()->bQuestion;
-    qDebug()<<"type:"<<curType;
     if(bQuest)
-    {
         card->LoadNormalImg(curType);
-    }
     if(curMode == MODEA)
     {
         QList<CardLabel *> cards = m_cardsModeA.value(qMakePair(curRow, curColumn));
@@ -957,6 +942,7 @@ void PlayWidget::RemoveAnimation(int index)
             QLabel *flicker = new QLabel(this);
             QPoint ptNew = m_ptSlot;
             ptNew.setX(m_ptSlot.x() + i * WIDTH);
+            ptNew.setY(m_ptSlot.y() + 5);
             QRect rt = QRect(ptNew, QSize(48, 48));
             flicker->setGeometry(rt);
             flicker->setPixmap(QPixmap(":/res/flash.png"));

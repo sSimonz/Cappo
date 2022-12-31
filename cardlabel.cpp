@@ -207,7 +207,7 @@ void CardLabel::LoadNormalImg(int type)
         path = ":/res/16.png";
         break;
     case QUESTION:
-        path = ":/res/plus.png";
+        path = ":/res/Question.png";
         m_info->bQuestion = true;
         break;
     }

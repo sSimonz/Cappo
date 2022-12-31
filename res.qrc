@@ -43,11 +43,13 @@
         <file>res/disco.mp3</file>
         <file>res/medal.png</file>
         <file>res/plus.png</file>
-        <file>res/BackButtonSound.wav</file>
         <file>res/app.png</file>
         <file>res/about.png</file>
         <file>res/DownInput.svg</file>
         <file>res/custom.svg</file>
         <file>res/Cardslot.png</file>
+        <file>res/Question.png</file>
+        <file>res/clicked.wav</file>
+        <file>res/Eliminate.wav</file>
     </qresource>
 </RCC>

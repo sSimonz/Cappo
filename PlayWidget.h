@@ -48,6 +48,7 @@ private:
     void InitModeC(int layer, int row, int column, int &index, QVector< QVector<int>> gameArray);
     void InitBtnSetting();
     void InitBtnProp();
+    void InitQCards(int size = 4);// 初始化问号牌型(初始化为问号, 添加进卡槽显示对应类型)
     void InitTimer();
     void ResetTimer();
     /**
@@ -66,7 +67,6 @@ private:
     void popSuccessDialog();// 胜利
     void popFailDialog();// 失败
     void RemoveAnimation(int index);// 消除闪烁动画, index和前两个位置开启闪烁动画
-    void InitQCards(int size = 4);// 初始化问号牌型(初始化为问号, 添加进卡槽显示对应类型)
 
 signals:
     void sendHome(int);
