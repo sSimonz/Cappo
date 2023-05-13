@@ -61,4 +61,12 @@
 	<string id="IDS_SET_VOLUME">Volume</string>
 	<string id="IDS_SET_REWARD">Reward Author</string>
 	<string id="IDS_SET_ABOUT">About</string>
+	<string id="IDS_LEVEL_CUSTOM">Custom level</string>
+	<string id="IDS_CUSTOM_LEVEL">Level(1-30):</string>
+	<string id="IDS_CUSTOM_TYPES">Types(1-16):</string>
+	<string id="IDS_CUSTOM_STAGE">How to add:</string>
+	<string id="IDS_CUSTOM_INSERT">Insert</string>
+	<string id="IDS_CUSTOM_ADDEND">Add end</string>
+	<string id="IDS_CUSTOM_EMPTY">Input can not be empty.</string>
+	<string id="IDS_CUSTOM_RANGE">Please enter a specified range.</string>
 </StringTable>

@@ -61,4 +61,12 @@
 	<string id="IDS_SET_VOLUME">声音</string>
 	<string id="IDS_SET_REWARD">打赏作者</string>
 	<string id="IDS_SET_ABOUT">关于游戏</string>
+	<string id="IDS_LEVEL_CUSTOM">自定义难度</string>
+	<string id="IDS_CUSTOM_LEVEL">关卡(1-30):</string>
+	<string id="IDS_CUSTOM_TYPES">种类(1-16):</string>
+	<string id="IDS_CUSTOM_STAGE">添加方式:</string>
+	<string id="IDS_CUSTOM_INSERT">插入中间</string>
+	<string id="IDS_CUSTOM_ADDEND">添加末尾</string>
+	<string id="IDS_CUSTOM_EMPTY">输入不能为空</string>
+	<string id="IDS_CUSTOM_RANGE">请输入指定的范围</string>
 </StringTable>

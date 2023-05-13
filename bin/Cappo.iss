@@ -3,14 +3,13 @@
 #define MyCompanyName "Cappo"
 #define MyAppName "Cappo Of Cappo"
 #define MyAppVersion "1.0.1"
-#define MyAppPublisher "Dvrsoft Systems, Inc."
+#define MyAppPublisher ", Inc."
 #define MyAppURL ""
-#define MyAppExeName "VCMS.exe"
-#define MyTempOutPutName "VCMS_P2P"
-#define MyDBName "VCMS.db"
+#define MyAppExeName "Sheep.exe"
+#define MyTempOutPutName "Cappo"
 
 #define MyAppSrcFolder     "Release"
-#define MyAppId   "{DE8F044D-4CAD-433F-959B-FF9C7C97669F}"
+#define MyAppId   "{413680CA-23B5-8083-8B5D-991262403223}"
 #define MyBuildTime        GetDateTimeString('yyyy_mm_dd', '', '');
 [Setup]
 ; 注: AppId的值为单独标识该应用程序。
@@ -30,10 +29,9 @@ OutputDir=.\Output\V{#MyAppVersion}
 OutputBaseFilename={#MyTempOutPutName}_{#MyAppVersion}_{#MyBuildTime}
 Compression=lzma
 SolidCompression=yes
-WizardImageFile=.\image\left.bmp
 UsePreviousAppDir=yes
 [Languages]
-Name: "english"; MessagesFile: "compiler:\Languages\English.islu"        
+;Name: "chinese"; MessagesFile: "compiler:\Languages\Chinese.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
@@ -44,27 +42,27 @@ Source: ".\{#MyAppSrcFolder}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreve
 Source: ".\{#MyAppSrcFolder}\*"; DestDir: "{app}"; Excludes: "*.pdb"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; 注意: 不要在任何共享系统文件上使用“Flags: ignoreversion”
   ; Add the ISSkin DLL used for skinning Inno Setup installations.
-Source: compiler:ISSkin.dll; DestDir: {app}; Flags: dontcopy
+;Source: compiler:ISSkin.dll; DestDir: {app}; Flags: dontcopy
 ; Add the Visual Style resource contains resources used for skinning,
 ; you can also use Microsoft Visual Styles (*.msstyles) resources.
-Source: compiler:IsSkins\Office2007.cjstyles; DestDir: {tmp}; Flags: dontcopy
+;Source: compiler:IsSkins\Office2007.cjstyles; DestDir: {tmp}; Flags: dontcopy
 
 [UninstallDelete]
 ;Type: files; Name: "{app}\*.*"
-Type: filesandordirs; Name: "{app}\*."
-Type: filesandordirs; Name: "{userappdata}\{#MyCompanyName}\{#MyAppName}\*.ini"
+Type: filesandordirs; Name: "{app}"
 Type: filesandordirs; Name: "{userappdata}\{#MyCompanyName}\{#MyAppName}\*.db"
-
+Type: filesandordirs; Name: "{userappdata}\{#MyCompanyName}\{#MyAppName}\*.ini"
+Type: filesandordirs; Name: "{userappdata}\{#MyCompanyName}\{#MyAppName}\*.ini"
+Type: filesandordirs; Name: "{userappdata}\{#MyCompanyName}\{#MyAppName}"
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"; IconFilename: "{app}\Uninstall.ico"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
-
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-Filename: {app}\vcredist_x86.exe; Parameters: /q; Flags: skipifdoesntexist; StatusMsg: "Installing Microsoft Visual C++ Runtime ..."; Check: NeedInstallMSVCRuntime;
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent  
+Filename: {app}\vcredist_x86.exe; Parameters: /q; Flags: skipifdoesntexist; StatusMsg: "Installing Microsoft Visual C++ Runtime ...";
 
 [Code]
 // Importing LoadSkin API from ISSkin.DLL
@@ -88,12 +86,11 @@ then DeleteProfile := ExpandConstant('{userappdata}\{#MyCompanyName}\{#MyAppName
 DelTree(DeleteProfile, True, True, True);
 end;
 
+
 function IsAppRuning(): Boolean;
 var
 HasRun:Boolean;
 strFile :string;
-strNewFile :string;
-posIndex :Integer;
 begin
 Result:= false;
 strFile := ExpandConstant('{userappdata}\{#MyCompanyName}\{#MyAppName}\{#MyAppName}');
@@ -101,19 +98,10 @@ strFile := strFile + '.db';
 HasRun := FileExists(strFile);
 if HasRun = true then
 begin
-posIndex := Pos('.', strFile);
-strNewFile := Copy(strFile, 0, posIndex-1);
-strNewFile := strNewFile + '1.db';
-FileCopy(strFile, strNewFile, false);
 HasRun := DeleteFile(strFile);
 if HasRun = false then
 begin
 Result := true;
-end else
-begin
-strFile := strNewFile;
-strNewFile := ExpandConstant('{userappdata}\{#MyCompanyName}\{#MyAppName}\{#MyDBName}');
-RenameFile(strFile, strNewFile);
 end
 end
 end;
@@ -190,7 +178,7 @@ begin
       bool := RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\'+S,'UninstallString',ResultStr);
       if bool then
         begin
-          if MsgBox('Setup has detected that the computer has been installed on the {#MyAppName} client.' #13#13 'Whether you want to uninstall {#MyAppName} client?',  mbConfirmation, MB_YESNO) = IDYES then
+          if MsgBox('Setup has detected that the computer has been installed on the {#MyAppName} client。' #13#13 'Whether you want to uninstall {#MyAppName} client？',  mbConfirmation, MB_YESNO) = IDYES then
             begin
               Exec(RemoveQuotes(ResultStr), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
               if AppUinstallFinish() = true then
@@ -265,29 +253,6 @@ procedure CancelButtonClick(CurPageID: Integer; var Cancel, Confirm: Boolean);
 begin
 end ;
 
-function NeedInstallMSVCRuntime(): Boolean;
-var
-strMsvcp140:string;
-strVcruntime140:string;
-begin
-	Result := false;
-	strMsvcp140 := ExpandConstant('{sys}\msvcp140');
-	strMsvcp140 := strMsvcp140 + '.dll';
-	
-	strVcruntime140 := ExpandConstant('{sys}\vcruntime140');
-	strVcruntime140 := strVcruntime140 + '.dll';
-	
-  	if FileExists(strMsvcp140) = false then
-	begin
-		Result := true;
-	end;
-	
-	if FileExists(strVcruntime140) = false then
-	begin
-		Result := true;
-	end;
-end;
-
 function InitializeSetup(): Boolean;
 var s: string;
 begin
@@ -298,8 +263,7 @@ begin
   if IsOldVersionexist() = true then 
   begin
   Result := true;
-  end;
-  
+  end
 end;
 
 function InitializeUninstall(): Boolean;
@@ -311,6 +275,7 @@ begin
    
      end
 end;
+
 
 [Registry]
 Root: HKLM; Subkey: "Software\{#MyCompanyName}\{#MyAppName}"; ValueType: string; ValueName:"{#MyAppName}"; ValueData:"{app}\{#MyAppExeName}"; Flags: uninsdeletekey

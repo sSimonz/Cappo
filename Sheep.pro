@@ -47,6 +47,9 @@ HEADERS += \
         mainwindow.h \
         timelistwidget.h \
         waitingdialog.h
+	
+CONFIG += mobility
+MOBILITY = 
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -57,6 +60,8 @@ RESOURCES += \
     res.qrc
 
 RC_ICONS = main.ico
+
+#QMAKE_LINK += -nostdlib++ #用于Android
 
 CONFIG += debug_and_release
 CONFIG(debug, debug|release) {
