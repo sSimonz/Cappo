@@ -4,6 +4,7 @@
 #include <QMovie>
 #include <QPainter>
 #include <QTimer>
+#include <QPainterPath>
 #include <QDebug>
 
 WaitingDialog::WaitingDialog(QWidget *parent) :
